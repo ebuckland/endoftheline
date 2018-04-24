@@ -231,6 +231,18 @@ MonoBehaviour:
     enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
     count: 2
     rate: 1
+  - name: Medium
+    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
+    count: 3
+    rate: 1.5
+  - name: Hard
+    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
+    count: 5
+    rate: 1.5
+  - name: Boss
+    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
+    count: 9
+    rate: 2
   spawnPoints:
   - {fileID: 937738423}
   timeBetweenWaves: 3
@@ -412,7 +424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 937738423}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: SpawnPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

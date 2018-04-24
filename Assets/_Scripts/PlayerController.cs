@@ -2,35 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
 
 	// constants
 	public float PLAYER_FORCE = 2f;
 	private Rigidbody2D RB;
+	private GameObject bulletGO;
+
+
+	// lists
+
+
+
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 
 		RB = this.GetComponent<Rigidbody2D> ();
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
-		Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		Vector2 dir = new Vector2 (
-			mousePosition.x - transform.position.x, 
-			mousePosition.y - transform.position.y
-		);
+			              mousePosition.x - transform.position.x, 
+			              mousePosition.y - transform.position.y
+		              );
 
 		transform.up = dir;
 		
 	}
 
-	void FixedUpdate() {
+	void FixedUpdate ()
+	{
 	
 
 		Vector2 direction = Vector2.zero;
@@ -62,8 +73,68 @@ public class PlayerController : MonoBehaviour {
 		
 		}
 
+		if (Input.GetMouseButtonDown (0)) {
+		
+			shoot ();
+		
+		
+		}
+	
+	}
 
 
+	void shoot ()
+	{
+	
+	
+	
+	
+	
+	
+	}
+
+
+
+
+	private class bullet
+	{
+	
+		public int Type0 = 0;
+
+		private GameObject GO;
+
+		float velocity;
+
+		public void init (GameObject gameObject, int type)
+		{
+
+			GO = Instantiate (gameObject);
+
+			switch (type) {
+
+			case 0:
+				velocity = 2;
+				break;
+
+			default:
+				velocity = 2;
+				break;
+
+			}
+
+
+
+
+
+		
+		
+		}
+
+
+
+	
+	
+	
 	
 	
 	}

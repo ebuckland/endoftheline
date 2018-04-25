@@ -5,18 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	public void startGame()
 	{
-		SceneManager.LoadScene("Game", LoadSceneMode.Single);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+	}
+
+	public void enterControls()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+	}
+
+	public void exitControls()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
 	}
 }

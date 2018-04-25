@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 	
 	
 	
-	
+
 	
 	
 	}
@@ -105,24 +105,30 @@ public class PlayerController : MonoBehaviour
 
 		float velocity;
 
-		public void init (GameObject gameObject, int type)
+		public void init (GameObject bullet, int type, Vector2 position, Quaternion rotation)
 		{
 
 			GO = Instantiate (gameObject);
+
+			Vector2 offset;
 
 			switch (type) {
 
 			case 0:
 				velocity = 2;
+				offset = new Vector2 (2, 0);
 				break;
 
 			default:
 				velocity = 2;
+				offset = new Vector2 (2, 0);
 				break;
 
 			}
 
+			GO.transform.rotation = rotation;
 
+			GO.transform.position += offset * GO.transform.forward;
 
 
 

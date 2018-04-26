@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
 	// constants
 	public float PLAYER_FORCE = 2f;
 	private Rigidbody2D RB;
-	private GameObject bulletGO;
+	public GameObject bulletGO;
+	public GameObject bulletOrigin;
 
 
 	// lists
-
+	private List<Bullet> bulletlist;
 
 
 
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
 	{
 
 		RB = this.GetComponent<Rigidbody2D> ();
+
+		bulletlist = new List<Bullet>();
 
 	}
 	
@@ -77,7 +80,6 @@ public class PlayerController : MonoBehaviour
 		
 			shoot ();
 		
-		
 		}
 	
 	}
@@ -85,18 +87,17 @@ public class PlayerController : MonoBehaviour
 
 	void shoot ()
 	{
-	
-	
-	
+		Bullet bullet = new Bullet ();
+		bullet.init (bulletGO, 0, bulletOrigin.transform.position, this.transform.rotation);
 
-	
+		bulletlist.Add (bullet);
 	
 	}
 
 
 
 
-	private class bullet
+	private class Bullet
 	{
 	
 		public int Type0 = 0;
@@ -105,42 +106,35 @@ public class PlayerController : MonoBehaviour
 
 		float velocity;
 
-		public void init (GameObject bullet, int type, Vector2 position, Quaternion rotation)
+		public void init (GameObject bullet, int type, Vector3 bulletOrigin, Quaternion rotation)
 		{
 
-			GO = Instantiate (gameObject);
-
-			Vector2 offset;
-
+			GO = Instantiate (bullet);
+			/*
 			switch (type) {
 
 			case 0:
 				velocity = 2;
-				offset = new Vector2 (2, 0);
 				break;
 
 			default:
 				velocity = 2;
-				offset = new Vector2 (2, 0);
 				break;
 
-			}
+			}*/
+
+			velocity = 4;
 
 			GO.transform.rotation = rotation;
 
-			GO.transform.position += offset * GO.transform.forward;
+			GO.transform.position = bulletOrigin;
 
+			GO.GetComponent<Rigidbody2D> ().velocity = velocity * GO.transform.forward;
 
+			GO.SetActive (true);
 
-		
 		
 		}
-
-
-
-	
-	
-	
 	
 	
 	}

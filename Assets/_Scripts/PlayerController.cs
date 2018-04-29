@@ -9,11 +9,10 @@ public class PlayerController : MonoBehaviour
 	// constants
 	public float PLAYER_FORCE = 2f;
 	private Rigidbody2D RB;
-	private GameObject bulletGO;
-
-
-	// lists
-
+	public GameObject bulletGO;
+	public GameObject bulletOrigin;
+	public float BULLET_DELAY = .1f;
+	private float bulletDelayTime;
 
 
 
@@ -22,6 +21,8 @@ public class PlayerController : MonoBehaviour
 	{
 
 		RB = this.GetComponent<Rigidbody2D> ();
+
+		bulletDelayTime = Time.time;
 
 	}
 	
@@ -73,10 +74,11 @@ public class PlayerController : MonoBehaviour
 		
 		}
 
-		if (Input.GetMouseButtonDown (0)) {
+
+		if (Input.GetMouseButtonDown (0) && Time.time - bulletDelayTime > BULLET_DELAY) {
 		
+			bulletDelayTime = Time.time;
 			shoot ();
-		
 		
 		}
 	
@@ -85,63 +87,31 @@ public class PlayerController : MonoBehaviour
 
 	void shoot ()
 	{
-	
-	
-	
-
-	
-	
-	}
-
-
-
-
-	private class bullet
-	{
-	
-		public int Type0 = 0;
-
-		private GameObject GO;
-
-		float velocity;
-
-		public void init (GameObject bullet, int type, Vector2 position, Quaternion rotation)
-		{
-
-			GO = Instantiate (gameObject);
-
-			Vector2 offset;
-
+		GameObject GO = Instantiate (bulletGO);
+		/*
 			switch (type) {
 
 			case 0:
 				velocity = 2;
-				offset = new Vector2 (2, 0);
 				break;
 
 			default:
 				velocity = 2;
-				offset = new Vector2 (2, 0);
 				break;
 
-			}
+			}*/
 
-			GO.transform.rotation = rotation;
+		float velocity = 4f;
 
-			GO.transform.position += offset * GO.transform.forward;
+		GO.transform.rotation = bulletOrigin.transform.rotation;
 
+		GO.transform.position = bulletOrigin.transform.position;
 
+		GO.SetActive (true);
 
-		
-		
-		}
+		GO.GetComponent<Rigidbody2D> ().velocity = velocity * GO.transform.up;
 
-
-
-	
-	
-	
-	
+		Destroy (GO, 3f);
 	
 	}
 }

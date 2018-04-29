@@ -1,11 +1,17 @@
 fileFormatVersion: 2
 <<<<<<< HEAD:Assets/Enemy.prefab.meta
+<<<<<<< HEAD:Assets/Enemy.prefab.meta
 guid: 67feb0ee57617f543b0628ade96191ea
 timeCreated: 1524603609
 =======
 guid: 18bbf7f7e32b34aeba33dc423c32b6fe
 folderAsset: yes
 timeCreated: 1524685837
+>>>>>>> master:Assets/Materials.meta
+=======
+guid: 9425bca38ced34b94bf9896b6daede1e
+folderAsset: yes
+timeCreated: 1524965753
 >>>>>>> master:Assets/Materials.meta
 licenseType: Free
 NativeFormatImporter:

@@ -6,9 +6,8 @@ public class BorderController : MonoBehaviour {
 
 	public PlayerController playerController;
 
-	void OnTriggerExit(Collider2D collider) {
-	
-	
+	void OnTriggerExit(Collider2D collider)
+    {
 	
 	
 	

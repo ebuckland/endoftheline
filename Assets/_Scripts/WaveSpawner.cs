@@ -33,11 +33,11 @@ public class WaveSpawner : MonoBehaviour
     {
         waveCountdown = timeBetweenWaves;
 	}
-	
+	/*
 	// Update is called once per frame
 	void Update ()
     {
-
+ 
         if (state == SpawnState.WAITING)
         {
             if (!EnemyIsAlive())
@@ -62,7 +62,7 @@ public class WaveSpawner : MonoBehaviour
             waveCountdown -= Time.deltaTime;
         }
 	}
-
+    
     bool EnemyIsAlive()
     {
         searchCountdown -= Time.deltaTime;
@@ -114,5 +114,5 @@ public class WaveSpawner : MonoBehaviour
 
         nextWave++;
     }
-
+    */
 }

@@ -26,10 +26,8 @@ public class EnemyFollow : MonoBehaviour
         if (col.gameObject.tag == "Bullet")
         {
             Destroy(col.gameObject);
+            GameObject.Find("HoldPool").GetComponent<EnemyPool>().hitMe(gameObject);
         }
-
-        // GameObject.Find("HoldPool").GetComponent<EnemyPool>().hitMe(gameObject);
-
 
     }
 

@@ -199,68 +199,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 8238874}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &318447949
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 318447951}
-  - component: {fileID: 318447950}
-  m_Layer: 0
-  m_Name: Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &318447950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 318447949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33209c25ea6633944a8a2b953deaa895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waves:
-  - name: Normal
-    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
-    count: 2
-    rate: 1
-  - name: Medium
-    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
-    count: 3
-    rate: 1.5
-  - name: Hard
-    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
-    count: 5
-    rate: 1.5
-  - name: Boss
-    enemy: {fileID: 4450459253482768, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
-    count: 9
-    rate: 2
-  spawnPoints:
-  - {fileID: 937738423}
-  timeBetweenWaves: 3
-  waveCountdown: 0
-  state: 2
---- !u!4 &318447951
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 318447949}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.47, y: -1.31, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &333280066
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +319,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!1 &562108739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 562108740}
+  m_Layer: 0
+  m_Name: SpawnPoint1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &562108740
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562108739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.62, y: 2.48, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &839387713
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +562,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 937738422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.47, y: -1.31, z: 0}
+  m_LocalPosition: {x: -4.47, y: 2.68, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -677,7 +643,7 @@ GameObject:
   - component: {fileID: 1157973616}
   - component: {fileID: 1157973615}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: HoldPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,7 +661,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPrefab: {fileID: 1551945648480896, guid: 67feb0ee57617f543b0628ade96191ea, type: 2}
-  spawnPoints: {fileID: 937738423}
+  spawnPoints:
+  - {fileID: 937738423}
+  - {fileID: 562108740}
   WaveSizeIncrease: 1
   SecsBetweenWaves: 2
   startingHealth: 100

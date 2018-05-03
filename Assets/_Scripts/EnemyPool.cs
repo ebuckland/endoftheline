@@ -15,7 +15,7 @@ public class EnemyUnit
 public class EnemyPool : MonoBehaviour
 {
     public GameObject myPrefab;
-    public Transform spawnPoints;
+    public Transform[] spawnPoints;
 
     public int WaveSizeIncrease;
     public float SecsBetweenWaves;
@@ -29,21 +29,22 @@ public class EnemyPool : MonoBehaviour
     private float time = 0f;
     private int currentHealth = 0;
 
-    List<EnemyUnit> EnemyClassList;
+    private List<EnemyUnit> EnemyClassList = new List<EnemyUnit>();
 
     // Use this for initialization
     void Start()
     {
         currentHealth = startingHealth;
         WaveSize = 1;
-
-        EnemyClassList = new List<EnemyUnit>();
-
+        //EnemyClassList = new List<EnemyUnit>();
+        int randomPick = Random.Range(0, 2);
         TotalCount = TotalCount + 1;
 
         CurentEnemy = new EnemyUnit();
-        CurentEnemy.enemyInstance = Instantiate(myPrefab, spawnPoints.position, spawnPoints.rotation) as GameObject;
+        CurentEnemy.enemyInstance = Instantiate(myPrefab, spawnPoints[randomPick].position, spawnPoints[randomPick].rotation) as GameObject;
+        CurentEnemy.enemyInstance.SetActive(true);
         CurentEnemy.tagName = "Enemy" + TotalCount;
+        CurentEnemy.enemyInstance.name = CurentEnemy.tagName;
         CurentEnemy.currentHealth = currentHealth;
         CurentEnemy.maxHealth = currentHealth;
         CurentEnemy.active = true;
@@ -59,77 +60,92 @@ public class EnemyPool : MonoBehaviour
         if (time > SecsBetweenWaves)
         {
             time = 0f;
-            WaveSize += WaveSizeIncrease;
             spawnWave();
         }
     }
 
     public void hitMe(GameObject test)
     {
-        foreach (EnemyUnit x in EnemyClassList)
+
+        for (int i = 0; i < EnemyClassList.Count; i++)
         {
-            if (x.enemyInstance == test)
+            if (EnemyClassList[i].enemyInstance.name == test.name)
             {
-                x.currentHealth -= damageTakenPerHit;
-                if (x.currentHealth <= 0)
+                EnemyClassList[i].currentHealth -= damageTakenPerHit;
+                if (EnemyClassList[i].currentHealth <= 0)
                 {
-                    //x.active = false;
-                    x.enemyInstance.SetActive(false);
+                    EnemyClassList[i].active = false;
+                    EnemyClassList[i].enemyInstance.SetActive(false);
                 }
             }
         }
+
 
     }
 
     void spawnWave()
     {
-        int count = 0;
-        int EnemiesDead = 0;
+        int EnemiesLeftAlive = 0;
+        int EnemiesToRespawn = 0;
         bool reuse = false;
 
         currentHealth += healthIncreasePerWave;
+        WaveSize += WaveSizeIncrease;
 
-        // how many active from last wave left
-        foreach (EnemyUnit x in EnemyClassList)
+
+        for (int i = 0; i < EnemyClassList.Count; i++)
         {
-            if (x.active == true)
+            if (EnemyClassList[i].active == true)
             {
-                count += 1;
+                EnemiesLeftAlive += 1;
             }
         }
-        EnemiesDead = WaveSize - count;
+
+        EnemiesToRespawn = WaveSize - EnemiesLeftAlive;
 
         // create more enemies to match wave size
-        for (int i = 0; i < EnemiesDead; i++)
+        for (int i = 0; i < EnemiesToRespawn; i++)
         {
             TotalCount = TotalCount + 1;
             reuse = false;
 
             // if an inactive pooled exists
-            foreach (EnemyUnit y in EnemyClassList)
+
+            for (int y = 0; y < EnemyClassList.Count; y++)
             {
-                if (y.active == false)
+                if (EnemyClassList[y].active == false)
                 {
-                    CurentEnemy = y;  // grab from pool
+                    int randomPick = Random.Range(0, 2);
+                    // reuse from pool
+                    Destroy(EnemyClassList[y].enemyInstance);
+                    EnemyClassList[y].enemyInstance = Instantiate(myPrefab, spawnPoints[randomPick].position, spawnPoints[randomPick].rotation) as GameObject;
+                    EnemyClassList[y].enemyInstance.SetActive(true);
+                    EnemyClassList[y].tagName = "Enemy" + TotalCount;
+                    EnemyClassList[y].enemyInstance.name = "Enemy" + TotalCount;
+                    EnemyClassList[y].currentHealth = currentHealth;
+                    EnemyClassList[y].maxHealth = currentHealth;
+                    EnemyClassList[y].active = true;
                     reuse = true;
+                    break;
                 }
             }
 
-
-            CurentEnemy = new EnemyUnit();
-            CurentEnemy.enemyInstance = Instantiate(myPrefab, spawnPoints.position, spawnPoints.rotation) as GameObject;
-            CurentEnemy.tagName = "Enemy" + TotalCount;
-
-            CurentEnemy.currentHealth = currentHealth;
-            CurentEnemy.maxHealth = currentHealth;
-            CurentEnemy.active = true;
-
             if (reuse == false)
             {
+                int randomPick = Random.Range(0, 1);
+
+                CurentEnemy = new EnemyUnit();
+
+                CurentEnemy.enemyInstance = Instantiate(myPrefab, spawnPoints[randomPick].position, spawnPoints[randomPick].rotation) as GameObject;
+                CurentEnemy.enemyInstance.SetActive(true);
+                CurentEnemy.tagName = "Enemy" + TotalCount;
+                CurentEnemy.enemyInstance.name = "Enemy" + TotalCount;
+
+                CurentEnemy.currentHealth = currentHealth;
+                CurentEnemy.maxHealth = currentHealth;
+                CurentEnemy.active = true;
                 EnemyClassList.Add(CurentEnemy);
             }
-
-
 
         }
     }

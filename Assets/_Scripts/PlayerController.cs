@@ -55,102 +55,102 @@ public class PlayerController : MonoBehaviour
 	void Update ()
 	{
 
+
 		if (isGameOver) {
 
-			Debug.Log (gameOver);
+			//Debug.Log (gameOver);
 		
 			gameOver++;
 			if (gameOver > GAME_OVER) {
 			
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 2);
 			
 			}
 		
-		}
-
-
-		Debug.Log ("regen wait: " + regenWait + "  regen time: " + regenTime);
-
-		if (regenWait > REGEN_WAIT) {
-			if (health < 6) {
-				regenTime++;
-			
-				if (regenTime > REGEN_TIME) {
-					health++;
-					updateHealth ();
-
-					regenTime = 0;
-				
-				}
-			
-			}
 		} else {
-			regenWait++;
-		}
 
-		if (damageWait < DAMAGE_WAIT) {
-		
-			damageWait++;
-		
-		}
+
+			//Debug.Log ("regen wait: " + regenWait + "  regen time: " + regenTime);
+
+			if (regenWait > REGEN_WAIT) {
+				if (health < 6) {
+					regenTime++;
 			
+					if (regenTime > REGEN_TIME) {
+						health++;
+						updateHealth ();
 
+						regenTime = 0;
+				
+					}
+			
+				}
+			} else {
+				regenWait++;
+			}
 
+			if (damageWait < DAMAGE_WAIT) {
+		
+				damageWait++;
+		
+			}
 
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
+			Vector2 dir = new Vector2 (
+				             mousePosition.x - transform.position.x, 
+				             mousePosition.y - transform.position.y
+			             );
 
-		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-
-		Vector2 dir = new Vector2 (
-			              mousePosition.x - transform.position.x, 
-			              mousePosition.y - transform.position.y
-		              );
-
-		transform.up = dir;
+			transform.up = dir;
+		}
 		
 	}
 
 	void FixedUpdate ()
 	{
+
+		if (!isGameOver) {
 	
 
-		Vector2 direction = Vector2.zero;
+			Vector2 direction = Vector2.zero;
 
-		if (Input.GetKey (KeyCode.W)) {
+			if (Input.GetKey (KeyCode.W)) {
 		
-			direction += Vector2.up;
+				direction += Vector2.up;
 		
-		}
-		if (Input.GetKey (KeyCode.A)) {
+			}
+			if (Input.GetKey (KeyCode.A)) {
 
-			direction += Vector2.left;
+				direction += Vector2.left;
 
-		}
-		if (Input.GetKey (KeyCode.S)) {
+			}
+			if (Input.GetKey (KeyCode.S)) {
 
-			direction += Vector2.down;
+				direction += Vector2.down;
 
-		}
-		if (Input.GetKey (KeyCode.D)) {
+			}
+			if (Input.GetKey (KeyCode.D)) {
 
-			direction += Vector2.right;
+				direction += Vector2.right;
 
-		}
+			}
 
-		if (direction != Vector2.zero) {
+			if (direction != Vector2.zero) {
 		
-			RB.AddForce (direction.normalized * PLAYER_FORCE);
+				RB.AddForce (direction.normalized * PLAYER_FORCE);
 		
-		}
+			}
 
 
-		if (Input.GetMouseButton(0) && Time.time - bulletDelayTime > BULLET_DELAY) {
+			if (Input.GetMouseButton (0) && Time.time - bulletDelayTime > BULLET_DELAY) {
 		
-			gunSound.Play ();
-			bulletDelayTime = Time.time;
-			shoot ();
+				gunSound.Play ();
+				bulletDelayTime = Time.time;
+				shoot ();
 
 		
+			}
 		}
 	
 	}
@@ -193,17 +193,15 @@ public class PlayerController : MonoBehaviour
 				regenWait = 0;
 				regenTime = 0;
 				damageWait = 0;
-
+				health--;
 				if (health == 0) {
-				
 					isGameOver = true;
-				
 
 				} else {
 					oofSound.Play ();
-					health--;
-					updateHealth ();
+
 				}
+				updateHealth ();
 			
 
 			}

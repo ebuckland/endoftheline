@@ -1179,10 +1179,10 @@ RectTransform:
   m_Father: {fileID: 1429505874}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -294, y: -181}
-  m_SizeDelta: {x: 24.926, y: 8.9575}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 99, y: 28}
+  m_SizeDelta: {x: 24.925995, y: 8.957504}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1042054122
 MonoBehaviour:
@@ -2065,10 +2065,10 @@ MonoBehaviour:
   bulletOrigin: {fileID: 1296635467}
   BULLET_DELAY: 0.2
   HealthText: {fileID: 1042054120}
-  DAMAGE_WAIT: 24
+  DAMAGE_WAIT: 30
   REGEN_TIME: 60
   REGEN_WAIT: 50
-  GAME_OVER: 10
+  GAME_OVER: 120
 --- !u!50 &1832449896
 Rigidbody2D:
   serializedVersion: 4
@@ -2101,9 +2101,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.052027643, y: -0.26962894}
+  m_Offset: {x: -0.043221563, y: -0.26962894}
   serializedVersion: 2
-  m_Radius: 0.32139373
+  m_Radius: 0.4225164
 --- !u!82 &1832449898
 AudioSource:
   m_ObjectHideFlags: 0

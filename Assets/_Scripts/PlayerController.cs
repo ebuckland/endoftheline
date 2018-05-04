@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject bulletOrigin;
 	public float BULLET_DELAY = .1f;
 	private float bulletDelayTime;
+	private AudioSource gunSound;
 
 
 
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
 		RB = this.GetComponent<Rigidbody2D> ();
 
 		bulletDelayTime = Time.time;
+
+		gunSound = this.GetComponent<AudioSource> ();
 
 	}
 	
@@ -75,10 +78,12 @@ public class PlayerController : MonoBehaviour
 		}
 
 
-		if (Input.GetMouseButtonDown (0) && Time.time - bulletDelayTime > BULLET_DELAY) {
+		if (Input.GetMouseButton(0) && Time.time - bulletDelayTime > BULLET_DELAY) {
 		
+			gunSound.Play ();
 			bulletDelayTime = Time.time;
 			shoot ();
+
 		
 		}
 	
@@ -101,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
 			}*/
 
-		float velocity = 4f;
+		float velocity = 4.5f;
 
 		GO.transform.rotation = bulletOrigin.transform.rotation;
 
@@ -111,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
 		GO.GetComponent<Rigidbody2D> ().velocity = velocity * GO.transform.up;
 
-		Destroy (GO, 3f);
+		Destroy (GO, 2f);
 	
 	}
 }

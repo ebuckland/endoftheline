@@ -15,29 +15,38 @@ public class EnemyUnit
 public class EnemyPool : MonoBehaviour
 {
     public GameObject myPrefab;
-    public Transform[] spawnPoints;
+	private List<Transform> spawnPoints;
 
     public int WaveSizeIncrease;
     public float SecsBetweenWaves;
     public int startingHealth;
     public int healthIncreasePerWave;
     public int damageTakenPerHit;
+	private AudioSource deathSound;
 
+
+	public GameObject spawnPointsContainer;
     private int WaveSize;
     private EnemyUnit CurentEnemy;
     private int TotalCount = 0;
     private float time = 0f;
     private int currentHealth = 0;
+	public GameObject player;
 
     private List<EnemyUnit> EnemyClassList = new List<EnemyUnit>();
 
     // Use this for initialization
     void Start()
     {
+
+		spawnPoints = new List<Transform>(spawnPointsContainer.GetComponentsInChildren<Transform> ());
+
+		deathSound = this.GetComponent<AudioSource> ();
+
         currentHealth = startingHealth;
         WaveSize = 1;
         //EnemyClassList = new List<EnemyUnit>();
-        int randomPick = Random.Range(0, 2);
+		int randomPick = Random.Range(0, spawnPoints.Count - 1);
         TotalCount = TotalCount + 1;
 
         CurentEnemy = new EnemyUnit();
@@ -50,6 +59,11 @@ public class EnemyPool : MonoBehaviour
         CurentEnemy.active = true;
 
         EnemyClassList.Add(CurentEnemy);
+
+		Vector2 direction = player.transform.position - this.transform.position;
+		float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
+		Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+		transform.rotation = rotation;
     }
 
     // Update is called once per frame
@@ -74,6 +88,10 @@ public class EnemyPool : MonoBehaviour
                 EnemyClassList[i].currentHealth -= damageTakenPerHit;
                 if (EnemyClassList[i].currentHealth <= 0)
                 {
+
+
+					deathSound.PlayOneShot (deathSound.clip);
+					Debug.Log ("death");
                     EnemyClassList[i].active = false;
                     EnemyClassList[i].enemyInstance.SetActive(false);
                 }
@@ -115,7 +133,9 @@ public class EnemyPool : MonoBehaviour
             {
                 if (EnemyClassList[y].active == false)
                 {
-                    int randomPick = Random.Range(0, 2);
+					
+
+					int randomPick = Random.Range(0, spawnPoints.Count - 1);
                     // reuse from pool
                     Destroy(EnemyClassList[y].enemyInstance);
                     EnemyClassList[y].enemyInstance = Instantiate(myPrefab, spawnPoints[randomPick].position, spawnPoints[randomPick].rotation) as GameObject;
@@ -125,6 +145,13 @@ public class EnemyPool : MonoBehaviour
                     EnemyClassList[y].currentHealth = currentHealth;
                     EnemyClassList[y].maxHealth = currentHealth;
                     EnemyClassList[y].active = true;
+
+					// rotate the zombie to the player
+					Vector2 direction = player.transform.position - this.transform.position;
+					float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
+					Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+					transform.rotation = rotation;
+
                     reuse = true;
                     break;
                 }
@@ -132,7 +159,7 @@ public class EnemyPool : MonoBehaviour
 
             if (reuse == false)
             {
-                int randomPick = Random.Range(0, 1);
+				int randomPick = Random.Range(0, spawnPoints.Count - 1);
 
                 CurentEnemy = new EnemyUnit();
 
@@ -141,10 +168,17 @@ public class EnemyPool : MonoBehaviour
                 CurentEnemy.tagName = "Enemy" + TotalCount;
                 CurentEnemy.enemyInstance.name = "Enemy" + TotalCount;
 
+
                 CurentEnemy.currentHealth = currentHealth;
                 CurentEnemy.maxHealth = currentHealth;
                 CurentEnemy.active = true;
                 EnemyClassList.Add(CurentEnemy);
+
+				// rotate the zombie to the player
+				Vector2 direction = player.transform.position - this.transform.position;
+				float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
+				Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+				transform.rotation = rotation;
             }
 
         }

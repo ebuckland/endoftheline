@@ -19,4 +19,11 @@ public class Button : MonoBehaviour {
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
 	}
+
+	public void mainMenu()
+	{
+		FindObjectOfType<Score_Controller> ().resetScore ();
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-3);
+	}
 }

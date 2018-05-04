@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class Score_Controller : MonoBehaviour {
 
-	private int Score = 0;
+	private static int Score = 0;
 
 	private Text text;
 
 	// Use this for initialization
 	void Start () {
 		text = this.GetComponent<Text> ();
+
+		updateText ();
 	}
 
 	public void updateText() {
@@ -21,5 +23,11 @@ public class Score_Controller : MonoBehaviour {
 	public void updateText(int addToScore) {
 		Score += addToScore;
 		updateText();
+	}
+
+	public void resetScore() {
+	
+		Score = 0;
+	
 	}
 }

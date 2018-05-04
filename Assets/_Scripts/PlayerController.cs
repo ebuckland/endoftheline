@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,12 +20,17 @@ public class PlayerController : MonoBehaviour
 	public GameObject HealthText;
 
 	private int health = 6;
-	public int DAMAGE_WAIT = 80;
+	public int DAMAGE_WAIT;
 	private int damageWait = 0;
-	public int REGEN_TIME = 200;
+	public int REGEN_TIME;
 	private int regenTime = 0;
-	public int REGEN_WAIT = 60;
+	public int REGEN_WAIT;
 	private int regenWait = 0;
+	public int GAME_OVER;
+	private int gameOver = 0;
+	private bool isGameOver = false;
+
+	private AudioSource oofSound;
 
 
 
@@ -33,17 +39,65 @@ public class PlayerController : MonoBehaviour
 	void Start ()
 	{
 
+		AudioSource[] aSources = this.GetComponents<AudioSource> ();
+
+		oofSound = aSources [0];
+		gunSound = aSources [1];
+
 		RB = this.GetComponent<Rigidbody2D> ();
 
 		bulletDelayTime = Time.time;
 
-		gunSound = this.GetComponent<AudioSource> ();
 
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+
+		if (isGameOver) {
+
+			Debug.Log (gameOver);
+		
+			gameOver++;
+			if (gameOver > GAME_OVER) {
+			
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+			
+			}
+		
+		}
+
+
+		Debug.Log ("regen wait: " + regenWait + "  regen time: " + regenTime);
+
+		if (regenWait > REGEN_WAIT) {
+			if (health < 6) {
+				regenTime++;
+			
+				if (regenTime > REGEN_TIME) {
+					health++;
+					updateHealth ();
+
+					regenTime = 0;
+				
+				}
+			
+			}
+		} else {
+			regenWait++;
+		}
+
+		if (damageWait < DAMAGE_WAIT) {
+		
+			damageWait++;
+		
+		}
+			
+
+
+
+
 
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
@@ -132,17 +186,40 @@ public class PlayerController : MonoBehaviour
 	
 	}
 
-	void OnCollisionEnter (Collider2D collider) {
+	void OnCollisionStay2D (Collision2D coll) {
 	
-		if (collider.gameObject.tag == "Enemy") {
-			if (damageWait == 0) {
-				health++;
-				HealthText.GetComponent<Text> ().text = new string ("+", health);
+		if (coll.gameObject.tag == "Enemy") {
+			if (damageWait == DAMAGE_WAIT) {
+				regenWait = 0;
+				regenTime = 0;
+				damageWait = 0;
+
+				if (health == 0) {
+				
+					isGameOver = true;
+				
+
+				} else {
+					oofSound.Play ();
+					health--;
+					updateHealth ();
+				}
 			
-			
+
 			}
 		}
 	
 	
 	}
+
+
+	void updateHealth() {
+
+		HealthText.GetComponent<Text> ().text = new string ('+', health);
+	
+	
+	}
+
+
+
 }

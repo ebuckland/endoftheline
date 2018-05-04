@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,17 @@ public class PlayerController : MonoBehaviour
 	public float BULLET_DELAY = .1f;
 	private float bulletDelayTime;
 	private AudioSource gunSound;
+
+	public GameObject HealthText;
+
+	private int health = 6;
+	public int DAMAGE_WAIT = 80;
+	private int damageWait = 0;
+	public int REGEN_TIME = 200;
+	private int regenTime = 0;
+	public int REGEN_WAIT = 60;
+	private int regenWait = 0;
+
 
 
 
@@ -117,6 +129,20 @@ public class PlayerController : MonoBehaviour
 		GO.GetComponent<Rigidbody2D> ().velocity = velocity * GO.transform.up;
 
 		Destroy (GO, 2f);
+	
+	}
+
+	void OnCollisionEnter (Collider2D collider) {
+	
+		if (collider.gameObject.tag == "Enemy") {
+			if (damageWait == 0) {
+				health++;
+				HealthText.GetComponent<Text> ().text = new string ("+", health);
+			
+			
+			}
+		}
+	
 	
 	}
 }

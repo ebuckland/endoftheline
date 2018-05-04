@@ -23,6 +23,7 @@ public class EnemyPool : MonoBehaviour
     public int healthIncreasePerWave;
     public int damageTakenPerHit;
 	private AudioSource deathSound;
+	public GameObject ScoreText;
 
 
 	public GameObject spawnPointsContainer;
@@ -60,7 +61,6 @@ public class EnemyPool : MonoBehaviour
         CurentEnemy.active = true;
 
 		CurentEnemy.enemyInstance.transform.position = spawnPoints [randomPick].position;
-		Debug.Log (CurentEnemy.enemyInstance.transform.position - spawnPoints [randomPick].position);
         EnemyClassList.Add(CurentEnemy);
 
 		Vector2 direction = player.transform.position - CurentEnemy.enemyInstance.transform.position;
@@ -91,18 +91,49 @@ public class EnemyPool : MonoBehaviour
                 EnemyClassList[i].currentHealth -= damageTakenPerHit;
                 if (EnemyClassList[i].currentHealth <= 0)
                 {
+					//Debug.Log ("Killed by direct");
 
+					ScoreText.GetComponent<Score_Controller> ().updateText (EnemyClassList [i].maxHealth);
 
 					deathSound.PlayOneShot (deathSound.clip);
-					Debug.Log ("death");
+
                     EnemyClassList[i].active = false;
                     EnemyClassList[i].enemyInstance.SetActive(false);
                 }
             }
         }
-
-
     }
+
+	public void hitMe(GameObject test, bool isDirect)
+	{
+		if (isDirect) {
+		
+			hitMe(test);
+		
+		} else {
+
+			for (int i = 0; i < EnemyClassList.Count; i++)
+			{
+				if (EnemyClassList[i].enemyInstance.name == test.name)
+				{
+					EnemyClassList[i].currentHealth -= damageTakenPerHit/2;
+					if (EnemyClassList[i].currentHealth <= 0)
+					{
+						//Debug.Log ("Killed by collateral DMG");
+
+						ScoreText.GetComponent<Score_Controller> ().updateText (EnemyClassList [i].maxHealth);
+
+
+						EnemyClassList[i].active = false;
+						EnemyClassList[i].enemyInstance.SetActive(false);
+					}
+				}
+			}
+		}
+	}
+
+
+
 
     void spawnWave()
     {
@@ -151,7 +182,6 @@ public class EnemyPool : MonoBehaviour
 					EnemyClassList[y].enemyInstance.transform.position = spawnPoints [randomPick].position;
 
 
-					Debug.Log (EnemyClassList[y].enemyInstance.transform.position - spawnPoints [randomPick].position);
 
 					// rotate the zombie to the player
 					Vector2 direction = player.transform.position - EnemyClassList[y].enemyInstance.transform.position;
@@ -179,7 +209,6 @@ public class EnemyPool : MonoBehaviour
                 CurentEnemy.active = true;
 
 				CurentEnemy.enemyInstance.transform.position = spawnPoints [randomPick].position;
-				Debug.Log (CurentEnemy.enemyInstance.transform.position - spawnPoints [randomPick].position);
                 
 				EnemyClassList.Add(CurentEnemy);
 

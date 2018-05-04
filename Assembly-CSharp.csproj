@@ -57,6 +57,7 @@
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
      <Compile Include="Assets\_Scripts\Touchable.cs" />
      <Compile Include="Assets\_Scripts\WaveSpawner.cs" />
+     <Compile Include="Assets\Score_Controller.cs" />
      <None Include="Assets\spritefont_and_other\document_and_picturelist\readme.txt" />
      <None Include="Assets\Pixel Font - Tripfive\_README.txt" />
  <Reference Include="UnityEngine.UI">

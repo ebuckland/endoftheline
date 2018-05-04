@@ -40,6 +40,7 @@ public class EnemyPool : MonoBehaviour
     {
 
 		spawnPoints = new List<Transform>(spawnPointsContainer.GetComponentsInChildren<Transform> ());
+		spawnPoints.RemoveAt (0);
 
 		deathSound = this.GetComponent<AudioSource> ();
 
@@ -58,12 +59,14 @@ public class EnemyPool : MonoBehaviour
         CurentEnemy.maxHealth = currentHealth;
         CurentEnemy.active = true;
 
+		CurentEnemy.enemyInstance.transform.position = spawnPoints [randomPick].position;
+		Debug.Log (CurentEnemy.enemyInstance.transform.position - spawnPoints [randomPick].position);
         EnemyClassList.Add(CurentEnemy);
 
-		Vector2 direction = player.transform.position - this.transform.position;
+		Vector2 direction = player.transform.position - CurentEnemy.enemyInstance.transform.position;
 		float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
 		Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
-		transform.rotation = rotation;
+		CurentEnemy.enemyInstance.transform.rotation = rotation;
     }
 
     // Update is called once per frame
@@ -145,12 +148,16 @@ public class EnemyPool : MonoBehaviour
                     EnemyClassList[y].currentHealth = currentHealth;
                     EnemyClassList[y].maxHealth = currentHealth;
                     EnemyClassList[y].active = true;
+					EnemyClassList[y].enemyInstance.transform.position = spawnPoints [randomPick].position;
+
+
+					Debug.Log (EnemyClassList[y].enemyInstance.transform.position - spawnPoints [randomPick].position);
 
 					// rotate the zombie to the player
-					Vector2 direction = player.transform.position - this.transform.position;
+					Vector2 direction = player.transform.position - EnemyClassList[y].enemyInstance.transform.position;
 					float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
 					Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
-					transform.rotation = rotation;
+					EnemyClassList[y].enemyInstance.transform.rotation = rotation;
 
                     reuse = true;
                     break;
@@ -167,18 +174,20 @@ public class EnemyPool : MonoBehaviour
                 CurentEnemy.enemyInstance.SetActive(true);
                 CurentEnemy.tagName = "Enemy" + TotalCount;
                 CurentEnemy.enemyInstance.name = "Enemy" + TotalCount;
-
-
                 CurentEnemy.currentHealth = currentHealth;
                 CurentEnemy.maxHealth = currentHealth;
                 CurentEnemy.active = true;
-                EnemyClassList.Add(CurentEnemy);
+
+				CurentEnemy.enemyInstance.transform.position = spawnPoints [randomPick].position;
+				Debug.Log (CurentEnemy.enemyInstance.transform.position - spawnPoints [randomPick].position);
+                
+				EnemyClassList.Add(CurentEnemy);
 
 				// rotate the zombie to the player
-				Vector2 direction = player.transform.position - this.transform.position;
+				Vector2 direction = player.transform.position - CurentEnemy.enemyInstance.transform.position;
 				float angle = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
 				Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
-				transform.rotation = rotation;
+				CurentEnemy.enemyInstance.transform.rotation = rotation;
             }
 
         }

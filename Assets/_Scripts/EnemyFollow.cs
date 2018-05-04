@@ -6,14 +6,12 @@ public class EnemyFollow : MonoBehaviour
 {
     public int speed;
     private Transform target;
-	private Rigidbody2D RB;
 	public float rotateSpeed = .3f;
 
 
     // Use this for initialization
     void Start()
     {
-		RB = this.GetComponent<Rigidbody2D> ();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 

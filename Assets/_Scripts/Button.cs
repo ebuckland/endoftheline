@@ -7,6 +7,7 @@ public class Button : MonoBehaviour {
 
 	public void startGame()
 	{
+		FindObjectOfType<MusicController> ().playMusic (MusicController.Game);
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
 	}
 
@@ -23,6 +24,8 @@ public class Button : MonoBehaviour {
 	public void mainMenu()
 	{
 		FindObjectOfType<Score_Controller> ().resetScore ();
+
+		FindObjectOfType<MusicController> ().playMusic (MusicController.Menu);
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-3);
 	}
